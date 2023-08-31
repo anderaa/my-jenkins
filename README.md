@@ -65,9 +65,20 @@ Note the public IP address that is returned here.
 
 
 ### Jenkins setup
+
+Connec to the instance.
 ```
-ssh -i "<your_key>.pem" ec2-user@<instance_ip>
+ssh -i <path_to_pem_key_file> ec2-user@<instance_ip_from_above>
+```
+
+Verify the two docker containers are running. It might take a few minutes for them to start.
+```
+sudo docker ps
+```
+
+Now get the initial password.
+```
 docker exec -it <container_id> /bin/bash
 cat /var/jenkins_home/secrets/initialAdminPassword
 ```
-Navigate to `http://<instance_ip>:8080` and enter the initial pw from above.
+Navigate to `http://<instance_ip_from_aboved>:8080` and enter the initial pw from above.
