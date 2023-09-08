@@ -128,7 +128,7 @@ resource "aws_iam_instance_profile" "ecr_instance_profile" {
 ##### EC2
 resource "aws_instance" "jenkins_instance" {
   ami           = "ami-08a52ddb321b32a8c"
-  instance_type = "t2.micro"
+  instance_type = "t2.small"
   key_name      = "aaron-aws"
   subnet_id     = aws_subnet.jenkins_subnet.id
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
