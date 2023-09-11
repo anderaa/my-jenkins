@@ -147,19 +147,19 @@ resource "aws_instance" "jenkins_instance" {
               
               docker network create jenkins
 
-              docker run \
-                --name jenkins-docker \
-                --rm \
-                --detach \
-                --privileged \
-                --network jenkins \
-                --network-alias docker \
-                --env DOCKER_TLS_CERTDIR=/certs \
-                --volume jenkins-docker-certs:/certs/client \
-                --volume jenkins-data:/var/jenkins_home \
-                --publish 2376:2376 \
-                docker:dind \
-                --storage-driver overlay2
+              # docker run \
+              #   --name jenkins-docker \
+              #   --rm \
+              #   --detach \
+              #   --privileged \
+              #   --network jenkins \
+              #   --network-alias docker \
+              #   --env DOCKER_TLS_CERTDIR=/certs \
+              #   --volume jenkins-docker-certs:/certs/client \
+              #   --volume jenkins-data:/var/jenkins_home \
+              #   --publish 2376:2376 \
+              #   docker:dind \
+              #   --storage-driver overlay2
 
               docker run \
                 --name jenkins-blueocean \
@@ -174,6 +174,16 @@ resource "aws_instance" "jenkins_instance" {
                 --volume jenkins-data:/var/jenkins_home \
                 --volume jenkins-docker-certs:/certs/client:ro \
                 806152608109.dkr.ecr.us-east-1.amazonaws.com/my-jenkins:2.414.1-1
+
+              # new stuff
+              docker run -d \
+                --restart=always \
+                -p 127.0.0.1:2376:2375 \
+                --network jenkins \
+                -v /var/run/docker.sock:/var/run/docker.sock \
+                alpine/socat tcp-listen:2375,fork,reuseaddr \
+                unix-connect:/var/run/docker.sock
+
               EOF
 }
 
