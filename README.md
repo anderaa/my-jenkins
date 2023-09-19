@@ -131,8 +131,6 @@ python -m pytest .
 ```
 
 
-
-
 ### Get build status in Github
 https://stackoverflow.com/questions/14274293/show-current-state-of-jenkins-build-on-github-repo
 
@@ -147,3 +145,10 @@ Make sure you test the connection and make sure you save it.
 
 Now in your Jenkins project configuration, select Post Build Actions and select "Set github commit status (universal).
 Leave the default options except for Status result, select "One of default messages and statuses".
+
+
+### Have agent build an image
+
+There is some config needed to allow this to happen.
+- In the host instance, `sudo chmod 666 /var/run/docker.sock`
+
